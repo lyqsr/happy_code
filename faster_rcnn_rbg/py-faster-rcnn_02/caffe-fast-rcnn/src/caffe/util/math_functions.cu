@@ -1,5 +1,5 @@
 // #include <math_functions.h>  // CUDA's, not caffe's, for fabs, signbit
-#include <cuda_runtime_api.h> // loki add ^^__^^ !!!
+#include <cuda_runtime_api.h> // lyq add ^^__^^
 
 #include <thrust/device_vector.h>
 #include <thrust/functional.h>  // thrust::plus
