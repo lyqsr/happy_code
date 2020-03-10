@@ -68,12 +68,14 @@ def assign_proto(proto, name, val):
         if isinstance(val[0], dict):
             for item in val:
                 proto_item = getattr(proto, name).add()
-                for k, v in six.iteritems(item):
+                # for k, v in six.iteritems(item):
+                for k, v in six.items(item):  # lyq
                     assign_proto(proto_item, k, v)
         else:
             getattr(proto, name).extend(val)
     elif isinstance(val, dict):
-        for k, v in six.iteritems(val):
+        # for k, v in six.iteritems(val):
+        for k, v in six.items(val):  # lyq
             assign_proto(getattr(proto, name), k, v)
     else:
         setattr(proto, name, val)
@@ -150,7 +152,8 @@ class Function(object):
                 layer.top.append(self._get_top_name(top, names, autonames))
         layer.name = self._get_name(names, autonames)
 
-        for k, v in six.iteritems(self.params):
+        # for k, v in six.iteritems(self.params):
+        for k, v in six.items(self.params):  # lyq
             # special case to handle generic *params
             if k.endswith('param'):
                 assign_proto(layer, k, v)
@@ -186,10 +189,12 @@ class NetSpec(object):
         return self.__getattr__(item)
 
     def to_proto(self):
-        names = {v: k for k, v in six.iteritems(self.tops)}
+        # names = {v: k for k, v in six.iteritems(self.tops)}
+        names = {v: k for k, v in six.items(self.tops)}  # lyq
         autonames = Counter()
         layers = OrderedDict()
-        for name, top in six.iteritems(self.tops):
+        # for name, top in six.iteritems(self.tops):
+        for name, top in six.items(self.tops):  # lyq
             top._to_proto(layers, names, autonames)
         net = caffe_pb2.NetParameter()
         net.layer.extend(layers.values())
